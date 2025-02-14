@@ -4,6 +4,8 @@ This is a demo project on [Minip](https://github.com/Yosorable/minip), built by 
 
 You can download Minip App from [App Store](https://apps.apple.com/us/app/minip-editor/id6463115915) and then scan this QRCode on Minip App to install and run this project.
 
+![minip-demo](qrcode.jpg "QRCode")
+
 ## Build
 
 ### `npm run pack`
