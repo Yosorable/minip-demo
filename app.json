@@ -5,6 +5,7 @@
   "homepage": "index.html",
   "navigationBarStatus": "display",
   "icon": "app.jpg",
+  "version": "0.0.1",
   "webServerEnabled": true,
   "tabs": [
     {
