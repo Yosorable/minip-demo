@@ -6,6 +6,12 @@ You can download Minip App from [App Store](https://apps.apple.com/us/app/minip-
 
 ![minip-demo](qrcode.jpg "QRCode")
 
+## Screenshots
+
+|                         |                         |                         |
+| ----------------------- | ----------------------- | ----------------------- |
+| ![](screenshots/01.PNG) | ![](screenshots/02.PNG) | ![](screenshots/03.PNG) |
+
 ## Build
 
 ### `npm run pack`
