@@ -28,6 +28,7 @@ import {
   clearKVStorageSync,
   showPicker,
   scanQRCode,
+  openSettings,
 } from "minip-bridge";
 
 export default [
@@ -62,6 +63,12 @@ export default [
         name: "location",
         exec: (setRes) => {
           setRes(window.location.href);
+        },
+      },
+      {
+        name: "open settings",
+        exec: () => {
+          openSettings();
         },
       },
       {
