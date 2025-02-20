@@ -20,7 +20,6 @@ export default defineConfig({
         interface FileInfo {
           name: string;
           path: string;
-          hash: string;
         }
 
         const appInfo = JSON.parse(fs.readFileSync(configFile, "utf-8")) as {
@@ -64,7 +63,6 @@ export default defineConfig({
             files.push({
               name: path.basename(filePath),
               path: relativePath,
-              hash: "", // todo: remove it in app project
             });
           }
         };
