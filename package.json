@@ -1,6 +1,6 @@
 {
   "name": "minip-demo",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "scripts": {
     "start": "vite",
@@ -18,7 +18,7 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
-    "minip-bridge": "^1.0.6",
+    "minip-bridge": "^1.0.7-rc2",
     "solid-js": "^1.7.6"
   }
 }

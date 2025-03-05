@@ -29,6 +29,9 @@ import {
   showPicker,
   scanQRCode,
   openSettings,
+  getDeviceInfo,
+  getDeviceInfoSync,
+  MResponseStatusCode,
 } from "minip-bridge";
 
 export default [
@@ -520,6 +523,25 @@ export default [
             .catch((err) =>
               setRes(err ? err.message ?? JSON.stringify(err) : "Unknown error")
             );
+        },
+      },
+      {
+        name: "get device info",
+        exec: (setRes) => {
+          getDeviceInfo()
+            .then((res) => {
+              setRes(JSON.stringify(res));
+            })
+            .catch((err) =>
+              setRes(err ? err.message ?? JSON.stringify(err) : "Unknown error")
+            );
+        },
+      },
+      {
+        name: "get device info sync",
+        exec: (setRes) => {
+          const res = getDeviceInfoSync();
+          setRes(JSON.stringify(res));
         },
       },
     ],
