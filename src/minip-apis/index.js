@@ -530,7 +530,7 @@ export default [
         exec: (setRes) => {
           getDeviceInfo()
             .then((res) => {
-              setRes(JSON.stringify(res));
+              setRes(JSON.stringify(res.data));
             })
             .catch((err) =>
               setRes(err ? err.message ?? JSON.stringify(err) : "Unknown error")
@@ -541,7 +541,7 @@ export default [
         name: "get device info sync",
         exec: (setRes) => {
           const res = getDeviceInfoSync();
-          setRes(JSON.stringify(res));
+          setRes(JSON.stringify(res.data));
         },
       },
     ],

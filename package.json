@@ -18,7 +18,7 @@
     "vite-plugin-solid": "^2.7.0"
   },
   "dependencies": {
-    "minip-bridge": "^1.0.7-rc2",
+    "minip-bridge": "^1.0.9",
     "solid-js": "^1.7.6"
   }
 }
