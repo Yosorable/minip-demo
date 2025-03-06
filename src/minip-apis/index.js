@@ -276,8 +276,8 @@ export default [
             index: 0,
           })
             .then((res) => {
-              const selected = res.data;
-              if (selected !== null && selected !== undefined) {
+              if (res.hasData()) {
+                const selected = res.data;
                 setRes(`selected ${column[selected]}, res: ${selected}`);
               } else {
                 setRes("canceled");
@@ -300,8 +300,8 @@ export default [
             index: [0, 1],
           })
             .then((res) => {
-              const selected = res.data;
-              if (selected) {
+              if (res.hasData()) {
+                const selected = res.data;
                 let msg = "";
                 for (let index = 0; index < selected.length; index++) {
                   const i = selected[index];
@@ -324,8 +324,8 @@ export default [
             dateFormat: "yyyy-MM-dd",
           })
             .then((res) => {
-              const selected = res.data;
-              if (selected) {
+              if (res.hasData()) {
+                const selected = res.data;
                 setRes(`selected ${selected}`);
               } else {
                 setRes("canceled");
@@ -343,8 +343,8 @@ export default [
             dateFormat: "HH:mm",
           })
             .then((res) => {
-              const selected = res.data;
-              if (selected) {
+              if (res.hasData()) {
+                const selected = res.data;
                 setRes(`selected ${selected}`);
               } else {
                 setRes("canceled");
