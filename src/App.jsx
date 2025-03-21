@@ -8,18 +8,21 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 
 function App() {
-  const [page, setPage] = createSignal(params.page);
+  const page = params.page;
   return (
     <div class="fade-in">
       <Switch fallback={<PageNotFound />}>
-        <Match when={!page()}>
+        <Match when={!page}>
           <ApiListView />
         </Match>
-        <Match when={page() === "api"}>
+        <Match when={page === "api"}>
           <ApiView category={params.category} />
         </Match>
-        <Match when={page() === "MiniApp"}>
+        <Match when={page === "MiniApp"}>
           {lazy(() => import("./views/OtherViews/MiniApp"))}
+        </Match>
+        <Match when={page === "SQLite"}>
+          {lazy(() => import("./views/OtherViews/SQLite"))}
         </Match>
       </Switch>
     </div>

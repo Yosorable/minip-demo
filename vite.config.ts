@@ -123,39 +123,11 @@ export default defineConfig({
             printUrls();
           }
         };
-        // server.httpServer.once("listening", () => {
-        //   const interfaces = networkInterfaces();
-        //   let ipAddress = "";
-
-        //   for (const dev in interfaces) {
-        //     const iface = interfaces[dev]?.find(
-        //       (iface) => iface.family === "IPv4" && iface.internal === false
-        //     );
-
-        //     if (iface) {
-        //       ipAddress = iface.address;
-        //       break;
-        //     }
-        //   }
-        //   const port = (server.httpServer.address() as AddressInfo).port;
-        //   const installScheme = `minip://install/http://${ipAddress}:${port}/${
-        //     JSON.parse(fs.readFileSync(configFile, "utf-8")).name
-        //   }.zip`;
-
-        //   const qrcode = require("qrcode-terminal");
-        //   qrcode.generate(installScheme, { small: true }, (qrcode: string) => {
-        //     setTimeout(() => {
-        //       console.log("Scan this qrcode by Minip app");
-        //       console.log(installScheme);
-        //       console.log(qrcode);
-        //     }, 1000);
-        //   });
-        // });
       },
     },
   ],
   server: {
-    host: "0.0.0.0",
+    host: "192.168.0.32",
     port: 3000,
   },
   build: {
