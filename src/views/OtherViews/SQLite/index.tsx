@@ -25,12 +25,12 @@ export default function SQLiteView() {
       const res = await migrator?.migrateToLatest();
       if (res?.results) {
         console.debug(res?.results);
-        setMsg(JSON.stringify(res?.results) + ". ");
+        setMsg("migrate res:\n" + JSON.stringify(res?.results, null, 2));
       } else if (res?.error) {
         // @ts-ignore
         const message = res?.error?.message;
         console.debug(message);
-        setMsg(message + ". ");
+        setMsg("migrate error:\n" + message);
       }
     } else {
       setMsg("already migrated. ");
@@ -38,7 +38,7 @@ export default function SQLiteView() {
 
     setDB(database);
     const elapsed = Date.now() - start;
-    setMsg((curr) => curr + `init cost: ${elapsed} ms`);
+    setMsg((curr) => curr + `\ninit cost: ${elapsed} ms`);
   });
 
   async function insert() {
@@ -66,7 +66,7 @@ export default function SQLiteView() {
       numInsertedOrUpdatedRows: res.numInsertedOrUpdatedRows?.toString(),
     };
     console.log(obj);
-    setMsg(`cost: ${elapsed} ms, res: ` + JSON.stringify(obj, null, "  "));
+    setMsg(`cost: ${elapsed} ms\n` + JSON.stringify(obj, null, 2));
   }
 
   async function duplicateID() {
@@ -96,7 +96,7 @@ export default function SQLiteView() {
         insertId: res.insertId?.toString(),
         numInsertedOrUpdatedRows: res.numInsertedOrUpdatedRows?.toString(),
       };
-      setMsg(`cost: ${elapsed} ms, res: ` + JSON.stringify(obj, null, "  "));
+      setMsg(`cost: ${elapsed} ms\n` + JSON.stringify(obj, null, 2));
       console.log(obj);
     } catch (err) {
       const msg = (err as Error).message;
@@ -114,7 +114,7 @@ export default function SQLiteView() {
       .then((res) => {
         const elapsed = Date.now() - start;
         console.log(res);
-        setMsg(`cost: ${elapsed} ms, res: ` + JSON.stringify(res, null, "  "));
+        setMsg(`cost: ${elapsed} ms\n` + JSON.stringify(res, null, 2));
       });
   }
 
@@ -132,7 +132,7 @@ export default function SQLiteView() {
           numUpdatedRows: res.numUpdatedRows.toString(),
         };
         console.log(obj);
-        setMsg(`cost: ${elapsed} ms, res: ` + JSON.stringify(obj, null, "  "));
+        setMsg(`cost: ${elapsed} ms\n` + JSON.stringify(obj, null, 2));
       });
   }
 
@@ -144,7 +144,7 @@ export default function SQLiteView() {
       numDeletedRows: result.numDeletedRows.toString(),
     };
     console.log(obj);
-    setMsg(`cost: ${elapsed} ms, res: ` + JSON.stringify(obj, null, "  "));
+    setMsg(`cost: ${elapsed} ms\n` + JSON.stringify(obj, null, 2));
   }
 
   async function deleteAll() {
@@ -155,9 +155,59 @@ export default function SQLiteView() {
       numDeletedRows: result.numDeletedRows.toString(),
     };
     console.log(obj);
-    setMsg(`cost: ${elapsed} ms, res: ` + JSON.stringify(obj, null, "  "));
+    setMsg(`cost: ${elapsed} ms\n` + JSON.stringify(obj, null, 2));
   }
 
+  async function streamQueryAll() {
+    const start = Date.now();
+    const stream = db()!.selectFrom("person").selectAll().stream();
+    setMsg("");
+    let startLine = Date.now();
+    let cnt = 0;
+    for await (const person of stream) {
+      cnt++;
+      const now = Date.now();
+      const elapsedLine = now - startLine;
+      startLine = now;
+      setMsg(
+        (curr) =>
+          curr +
+          `step ${cnt}, cost: ${elapsedLine} ms\n${JSON.stringify(
+            person,
+            null,
+            2
+          )}\n`
+      );
+    }
+    const elapsed = Date.now() - start;
+    setMsg((curr) => curr + `total cost: ${elapsed} ms\n`);
+  }
+
+  async function streamQueryOne() {
+    const start = Date.now();
+    const stream = db()!.selectFrom("person").selectAll().stream();
+    setMsg("");
+    let startLine = Date.now();
+    let cnt = 0;
+    for await (const person of stream) {
+      cnt++;
+      const now = Date.now();
+      const elapsedLine = now - startLine;
+      startLine = now;
+      setMsg(
+        (curr) =>
+          curr +
+          `step ${cnt}, cost: ${elapsedLine} ms\n${JSON.stringify(
+            person,
+            null,
+            2
+          )}\n`
+      );
+      if (cnt === 1) break;
+    }
+    const elapsed = Date.now() - start;
+    setMsg((curr) => curr + `total cost: ${elapsed} ms\n`);
+  }
   return (
     <div>
       <div
@@ -166,7 +216,7 @@ export default function SQLiteView() {
           height: "300px",
         }}
       >
-        <div>{msg()}</div>
+        {msg()}
       </div>
       <div
         style={{
@@ -189,6 +239,8 @@ export default function SQLiteView() {
         }}
       >
         <button onClick={duplicateID}>duplicate id</button>
+        <button onClick={streamQueryAll}>stream query</button>
+        <button onClick={streamQueryOne}>stream query one</button>
       </div>
     </div>
   );
