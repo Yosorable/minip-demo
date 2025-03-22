@@ -32,7 +32,7 @@ export default function MiniApp() {
       .finally(() => setIsInstalling(false));
   }
   return (
-    <div>
+    <div class="fade-in">
       <div class="res-div">
         <div>{res()}</div>
       </div>

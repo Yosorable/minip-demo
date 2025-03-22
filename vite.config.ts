@@ -3,6 +3,7 @@ import solidPlugin from "vite-plugin-solid";
 import archiver from "archiver";
 import fs from "fs";
 import path from "path";
+import qrcode from "qrcode";
 
 const configFile = "app.json";
 
@@ -107,16 +108,16 @@ export default defineConfig({
               installSchemes.push(`minip://install/${url + appName}.zip`);
             }
 
-            const qrcode = require("qrcode-terminal");
-            qrcode.generate(
+            qrcode.toString(
               installSchemes.length === 1
                 ? installSchemes[0]
                 : JSON.stringify(installSchemes),
-              { small: true },
-              (qrcode: string) => {
+              { type: "terminal", small: true },
+              (err, url) => {
+                if (err) throw err;
                 printUrls();
-                console.log("Scan this qrcode by Minip app");
-                console.log(qrcode);
+                console.log("Scan this qrcode by Minip App");
+                console.log(url);
               }
             );
           } else {

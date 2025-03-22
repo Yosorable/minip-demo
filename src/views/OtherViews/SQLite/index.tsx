@@ -209,7 +209,7 @@ export default function SQLiteView() {
     setMsg((curr) => curr + `total cost: ${elapsed} ms\n`);
   }
   return (
-    <div>
+    <div class="fade-in">
       <div
         class="res-div"
         style={{
