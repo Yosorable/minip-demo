@@ -1,5 +1,6 @@
 // 1. Install dependencies
-// npm install --save-dev archiver @types/archiver qrcode @types/qrcode
+//    npm install --save minip-bridge
+//    npm install --save-dev archiver @types/archiver qrcode @types/qrcode
 // 2. Add this plugin, `base: ""`, `server: { host: "0.0.0.0"}` to vite.config.ts
 // 3. add `"pack": "vite build && vite preview"` to package.json
 

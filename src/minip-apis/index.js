@@ -31,7 +31,6 @@ import {
   openSettings,
   getDeviceInfo,
   getDeviceInfoSync,
-  MResponseStatusCode,
   getMemoryStorage,
   setMemoryStorage,
   setMemoryStorageIfNotExist,
