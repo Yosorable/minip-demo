@@ -4,7 +4,7 @@ import {
   Insertable,
   Selectable,
   Updateable,
-} from "minip-bridge";
+} from "kysely";
 
 export interface Database {
   person: PersonTable;

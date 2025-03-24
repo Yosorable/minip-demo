@@ -1,4 +1,4 @@
-import { Kysely } from "minip-bridge";
+import { Kysely } from "kysely";
 
 async function up(db: Kysely<any>): Promise<void> {
   await db.schema

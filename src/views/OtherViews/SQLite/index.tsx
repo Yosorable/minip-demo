@@ -1,4 +1,6 @@
-import { Kysely, openSqliteDB, setMemoryStorageIfNotExist } from "minip-bridge";
+import { setMemoryStorageIfNotExist } from "minip-bridge";
+import { openSqliteKyselyDB } from "minip-bridge/kysely";
+import { Kysely } from "kysely";
 import { createSignal, onMount } from "solid-js";
 import { Database } from "./database";
 import migrations from "./migrations";
@@ -8,7 +10,7 @@ export default function SQLiteView() {
   const [db, setDB] = createSignal<Kysely<Database>>();
   onMount(async () => {
     const start = Date.now();
-    const { db: database, migrator } = openSqliteDB<Database>({
+    const { db: database, migrator } = openSqliteKyselyDB<Database>({
       path: "db.sqlite3",
       debug: true,
       migratorProps: {

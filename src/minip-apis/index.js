@@ -159,7 +159,7 @@ export default [
       {
         name: "get",
         exec: (setRes) => {
-          fetch("https://www.baidu.com")
+          fetch("miniphttps://www.baidu.com")
             .then((res) => res.text())
             .then((res) => setRes(res))
             .catch((err) =>

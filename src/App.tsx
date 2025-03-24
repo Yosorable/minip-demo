@@ -1,10 +1,12 @@
-import { Match, Switch, createSignal, lazy } from "solid-js";
+// @ts-nocheck
+
+import { Match, Switch, lazy } from "solid-js";
 import ApiListView from "./views/ApiListView";
 import ApiView from "./views/ApiView";
 import PageNotFound from "./views/PageNotFound";
 
 const params = new Proxy(new URLSearchParams(window.location.search), {
-  get: (searchParams, prop) => searchParams.get(prop),
+  get: (target: URLSearchParams, prop: string) => target.get(prop),
 });
 
 function App() {

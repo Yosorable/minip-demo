@@ -3,6 +3,7 @@ import {
   getInstalledAppList,
   getKVStorage,
   installApp,
+  previewImage,
   setKVStorage,
 } from "minip-bridge";
 
