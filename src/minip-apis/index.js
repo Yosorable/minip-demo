@@ -630,4 +630,8 @@ export default [
     category: "MiniApp",
     target: "index.html?page=MiniApp",
   },
+  {
+    category: "FileSystem",
+    target: "index.html?page=FileSystem",
+  }
 ];

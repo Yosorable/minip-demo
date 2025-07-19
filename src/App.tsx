@@ -26,6 +26,9 @@ function App() {
         <Match when={page === "SQLite"}>
           {lazy(() => import("./views/OtherViews/SQLite"))}
         </Match>
+        <Match when={page === "FileSystem"}>
+          {lazy(() => import("./views/OtherViews/FileSystem"))}
+        </Match>
       </Switch>
     </div>
   );

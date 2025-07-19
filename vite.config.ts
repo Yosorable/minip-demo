@@ -5,7 +5,7 @@ import minip from "./vite-plugin-minip";
 export default defineConfig({
   plugins: [solid(), minip()],
   server: {
-    host: "192.168.0.32",
+    host: "0.0.0.0",
   },
   build: {
     target: "esnext",
