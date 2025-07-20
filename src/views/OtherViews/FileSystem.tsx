@@ -1,4 +1,5 @@
 import { access, accessSync, appendFile, appendFileSync, copyFile, copyFileSync, mkdir, mkdirSync, readDir, readDirSync, readFile, readFileSync, rename, renameSync, rm, rmdir, rmdirSync, rmSync, stat, statSync, truncate, truncateSync, unlink, unlinkSync, writeFile, writeFileSync } from "minip-bridge/fs";
+import * as fs from "minip-bridge/fs"
 import { createSignal } from "solid-js";
 
 export default function FileSystem() {
@@ -344,10 +345,102 @@ export default function FileSystem() {
     }
   }
 
+  const fdHandlers: Record<string, () => void> = {
+    "open": () => {
+      const start = Date.now()
+      fs.open(filename, fs.OpenFlags.O_CREAT | fs.OpenFlags.O_APPEND)
+        .then(fd => {
+          setMsg("fd: " + fd)
+          return fs.close(fd)
+        })
+        .catch((err) =>
+          setMsg(err ? err.message ?? JSON.stringify(err) : "Unknown error")
+        )
+        .finally(() => {
+          setMsg(curr => `cost: ${Date.now() - start}ms\n` + curr)
+        })
+    },
+    "fstat": () => {
+      const start = Date.now()
+      fs.open(filename, fs.OpenFlags.O_RDONLY)
+        .then(fd =>
+          fs.fstat(fd)
+            .then((data) => {
+              let info = `isDirectory: ${data.isDirectory()}\n`
+              info += `isFile: ${data.isFile()}\n`
+              info += `isSymbolicLink: ${data.isSymbolicLink()}\n`
+
+              setMsg(info + JSON.stringify(data, null, 2))
+              return fs.close(fd)
+            })
+        )
+        .catch((err) =>
+          setMsg(err ? err.message ?? JSON.stringify(err) : "Unknown error")
+        )
+        .finally(() => {
+          setMsg(curr => `cost: ${Date.now() - start}ms\n` + curr)
+        })
+
+    },
+    "ftruncate": () => {
+      const start = Date.now()
+      fs.open(filename, fs.OpenFlags.O_WRONLY)
+        .then(fd =>
+          fs.ftruncate(fd, 5)
+            .then(() => {
+              setMsg("ftruncate success")
+              return fs.close(fd)
+            })
+        )
+        .catch((err) =>
+          setMsg(err ? err.message ?? JSON.stringify(err) : "Unknown error")
+        )
+        .finally(() => {
+          setMsg(curr => `cost: ${Date.now() - start}ms\n` + curr)
+        })
+    },
+    "read": () => {
+      const start = Date.now()
+      const buffer = new ArrayBuffer(20)
+      fs.open(filename, fs.OpenFlags.O_RDONLY)
+        .then(fd =>
+          fs.read(fd, buffer, 0, 20)
+            .then(readBytes => {
+              const text = new TextDecoder().decode(buffer.slice(0, readBytes))
+              setMsg(`read success, read bytes: ${readBytes} , data: ${text}`)
+              return fs.close(fd)
+            })
+        )
+        .catch((err) =>
+          setMsg(err ? err.message ?? JSON.stringify(err) : "Unknown error")
+        )
+        .finally(() => {
+          setMsg(curr => `cost: ${Date.now() - start}ms\n` + curr)
+        })
+    },
+    "write": () => {
+      const start = Date.now()
+      const buffer = new TextEncoder().encode("hello, world!" + Date.now()).buffer
+      fs.open(filename, fs.OpenFlags.O_WRONLY)
+        .then(fd =>
+          fs.write(fd, buffer, 0, buffer.byteLength)
+            .then(writtenBytes => {
+              setMsg(`read success, written bytes: ${writtenBytes}`)
+              return fs.close(fd)
+            })
+        )
+        .catch((err) =>
+          setMsg(err ? err.message ?? JSON.stringify(err) : "Unknown error")
+        )
+        .finally(() => {
+          setMsg(curr => `cost: ${Date.now() - start}ms\n` + curr)
+        })
+    }
+  }
 
   return (
     <div class="fade-in">
-      <div class="res-div" style={{ height: "max(35vh, 300px)" }}>
+      <div class="res-div">
         <div>{msg()}</div>
       </div>
       <h4>async</h4>
@@ -377,6 +470,20 @@ export default function FileSystem() {
         {
           Object.keys(handlers).map(key =>
             <button onClick={() => handlers[key](false)}>{key}</button>
+          )
+        }
+      </div><h4>file descriptor</h4>
+      <div
+        style={{
+          "margin-top": ".5rem",
+          display: "flex",
+          gap: "5px",
+          "flex-wrap": "wrap"
+        }}
+      >
+        {
+          Object.keys(fdHandlers).map(key =>
+            <button onClick={() => fdHandlers[key]()}>{key}</button>
           )
         }
       </div>

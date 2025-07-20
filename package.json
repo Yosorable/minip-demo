@@ -10,7 +10,7 @@
     "pack": "tsc -b && vite build && vite preview"
   },
   "dependencies": {
-    "minip-bridge": "^1.0.24",
+    "minip-bridge": "1.0.26",
     "solid-js": "^1.9.5"
   },
   "devDependencies": {
