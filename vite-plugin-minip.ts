@@ -8,7 +8,7 @@ import archiver from "archiver";
 import fs from "fs";
 import path from "path";
 import qrcode from "qrcode";
-import { PluginOption, PreviewServer } from "vite";
+import type { PluginOption, PreviewServer } from "vite";
 import { randomUUID } from "crypto";
 
 const configFile = "app.json";
