@@ -421,7 +421,7 @@ export default function FileSystem() {
     "write": () => {
       const start = Date.now()
       const buffer = new TextEncoder().encode("hello, world!" + Date.now()).buffer
-      fs.open(filename, fs.OpenFlags.O_WRONLY)
+      fs.open(filename, fs.OpenFlags.O_WRONLY | fs.OpenFlags.O_CREAT | fs.OpenFlags.O_TRUNC)
         .then(fd =>
           fs.write(fd, buffer, 0, buffer.byteLength)
             .then(writtenBytes => {
