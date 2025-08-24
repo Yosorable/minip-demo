@@ -3,11 +3,11 @@
   "displayName": "Minip Api demo",
   "appId": "d538c758-0e9e-4d80-99c8-98dbcaffe25c",
   "homepage": "index.html",
+  "author": "Yosorable",
   "website": "https://github.com/Yosorable/minip-demo",
   "navigationBarStatus": "display",
   "icon": "app.jpg",
   "version": "0.0.6",
-  "webServerEnabled": true,
   "tabs": [
     {
       "path": "index.html",
