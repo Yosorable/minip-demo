@@ -81,7 +81,7 @@ export default [
       {
         name: "open website",
         exec: () => {
-          openWebsite("https://www.baidu.com");
+          openWebsite("https://www.bing.com");
         },
       },
       {
@@ -158,7 +158,7 @@ export default [
       {
         name: "get",
         exec: (setRes) => {
-          fetch("miniphttps://www.baidu.com")
+          fetch("miniphttps://www.bing.com")
             .then((res) => res.text())
             .then((res) => setRes(res))
             .catch((err) =>
@@ -369,7 +369,7 @@ export default [
         name: "preview image",
         exec: () => {
           previewImage(
-            "https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F60b50dcd-9ced-4e88-b6bb-9cd0c2b96d42%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1693234842&t=d1dac113784db5ae94ed44773ffcaf37"
+            "https://static.yueya.net/shuomingshu.cn//wp-content/uploads/images/2023/06/23/4b30c4d172cd4c709d170e8194cae245_ajwo1tt5eln.jpg"
           );
         },
       },
