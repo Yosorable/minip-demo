@@ -43,14 +43,14 @@ export default function ApiView({ category }) {
       >
         {categoryDetail.items.map((item) => (
           <button
-            onClick={() =>
+            onClick={(e) =>
               item.exec(function (r) {
                 if (typeof r === "string") {
                   setRes(r);
                   return;
                 }
                 setRes(JSON.stringify(r));
-              })
+              }, e)
             }
           >
             {item.name}

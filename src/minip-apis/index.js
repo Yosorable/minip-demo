@@ -108,12 +108,10 @@ export default [
         }, 2000);
       });
       window.addEventListener("pageshow", (e) => {
-        setRes("pageshow");
-        setRes(localStorage.getItem("pagehide-flag") ?? "");
-        localStorage.removeItem("pagehide-flag");
+        setRes("pageshow " + Date.now());
       });
       window.addEventListener("pagehide", (e) => {
-        localStorage.setItem("pagehide-flag", "[last time pagehide success]");
+        setRes("pagehide " + Date.now());
       });
     },
     items: [
@@ -205,7 +203,7 @@ export default [
             ],
           })
             .then((res) => {
-              setRes(`selected ${res.data}`);
+              setRes(`selected ${JSON.stringify(res.data)}`);
             })
             .catch((err) =>
               setRes(err ? err.message ?? JSON.stringify(err) : "Unknown error")
@@ -214,7 +212,7 @@ export default [
       },
       {
         name: "action sheet alert",
-        exec: (setRes) => {
+        exec: (setRes, e) => {
           showAlert({
             title: "actionSheet",
             message: "message",
@@ -237,7 +235,7 @@ export default [
             ],
           })
             .then((res) => {
-              setRes(`selected ${res.data}`);
+              setRes(`selected ${JSON.stringify(res.data)}`);
             })
             .catch((err) =>
               setRes(err ? err.message ?? JSON.stringify(err) : "Unknown error")
@@ -633,5 +631,5 @@ export default [
   {
     category: "FileSystem",
     target: "index.html?page=FileSystem",
-  }
+  },
 ];
