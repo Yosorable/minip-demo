@@ -1,10 +1,12 @@
 import { createSignal, onMount } from "solid-js";
 import {
+  getAppInfo,
   getInstalledAppList,
   getKVStorage,
   installApp,
   previewImage,
   setKVStorage,
+  updateCurrentApp,
 } from "minip-bridge";
 
 export default function MiniApp() {
@@ -76,6 +78,36 @@ export default function MiniApp() {
           }
         >
           app list
+        </button>
+      </div>
+
+      <div>
+        <button
+          onClick={() =>
+            getAppInfo().then((r) => {
+              setRes(JSON.stringify(r.data));
+            })
+          }
+        >
+          current app info
+        </button>
+      </div>
+
+      <div>
+        <button
+          onClick={() =>
+            updateCurrentApp("https://minip-demo.lzyl.win/down")
+              .then((r) => {
+                setRes(JSON.stringify(r));
+              })
+              .catch((err) =>
+                setRes(
+                  err ? err.message ?? JSON.stringify(err) : "Unknown error"
+                )
+              )
+          }
+        >
+          update current app
         </button>
       </div>
     </div>
