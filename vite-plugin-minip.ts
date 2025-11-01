@@ -1,14 +1,13 @@
 // 1. Install dependencies
 //    npm install --save minip-bridge
 //    npm install --save-dev archiver @types/archiver qrcode @types/qrcode
-// 2. Add this plugin, `base: ""`, `server: { host: "0.0.0.0"}` to vite.config.ts
-// 3. add `"pack": "vite build && vite preview"` to package.json
+// 2. add `"pack": "vite build && vite preview"` to package.json
 
 import archiver from "archiver";
 import fs from "fs";
 import path from "path";
 import qrcode from "qrcode";
-import type { PluginOption, PreviewServer } from "vite";
+import type { PluginOption, PreviewServer, UserConfig } from "vite";
 import { randomUUID } from "crypto";
 
 const configFile = "app.json";
@@ -135,6 +134,23 @@ const plugin: PluginOption = {
       }
     };
   },
+  config(config) {
+    const newConfig: UserConfig = {}
+    if (config.base == null) {
+      newConfig.base = ""
+    }
+
+    if (config.server?.host == null) {
+      newConfig.server = {
+        ...config.server,
+        host: "0.0.0.0",
+      }
+    }
+
+    if (Object.keys(newConfig).length > 0) {
+      return newConfig
+    }
+  }
 };
 
 export default function minipPlugin(): PluginOption {
